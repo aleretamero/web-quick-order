@@ -2,51 +2,51 @@ import { createBrowserRouter } from "react-router";
 import { GuestGuard } from "@/guard/guest.guard";
 import { AuthGuard } from "@/guard/auth.guard";
 import { LoginPage } from "@/pages/login.page";
-import { HomePage } from '@/pages/home.page';
-import { OrdersPage } from '@/pages/orders.page';
-import { CreateOrderPage } from '@/pages/create-order.page';
-import { OrderDetailsPagePage } from '@/pages/order-details.page';
+import { HomePage } from "@/pages/home.page";
+import { OrdersPage } from "@/pages/orders.page";
+import { CreateOrderPage } from "@/pages/create-order.page";
+import { OrderDetailsPagePage } from "@/pages/order-details.page";
+import { DashboardLayout } from "@/layouts/dashboard.layout";
+import { AuthLayout } from '@/layouts/auth.layout';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
     element: (
       <GuestGuard>
-        <LoginPage />
+        <AuthLayout />
       </GuestGuard>
     ),
+    children: [
+      {
+        path: "/",
+        element: <LoginPage />,
+      },
+    ],
   },
   {
-    path: "/home",
     element: (
       <AuthGuard>
-        <HomePage />
+        <DashboardLayout />
       </AuthGuard>
     ),
-  },
-  {
-    path: "orders",
-    element: (
-      <AuthGuard>
-        <OrdersPage />
-      </AuthGuard>
-    ),
-  },
-  {
-    path: "orders/create",
-    element: (
-      <AuthGuard>
-        <CreateOrderPage />
-      </AuthGuard>
-    ),
-  },
-  {
-    path: "orders/:id",
-    element: (
-      <AuthGuard>
-        <OrderDetailsPagePage />
-      </AuthGuard>
-    ),
+    children: [
+      {
+        path: "/home",
+        element: <HomePage />,
+      },
+      {
+        path: "orders",
+        element: <OrdersPage />,
+      },
+      {
+        path: "orders/create",
+        element: <CreateOrderPage />,
+      },
+      {
+        path: "orders/:id",
+        element: <OrderDetailsPagePage />,
+      },
+    ],
   },
   {
     path: "*",
