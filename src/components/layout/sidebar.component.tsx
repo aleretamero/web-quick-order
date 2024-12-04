@@ -75,7 +75,7 @@ export function AppSidebar({ data, children }: SidebarProps) {
     <SidebarProvider>
       <Sidebar collapsible="icon">
         <SidebarHeader>
-          <div className="flex gap-2 py-2 text-sidebar-accent-foreground ">
+          <div className="flex gap-2 py-2 text-sidebar-accent-foreground">
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <company.logo className="size-4" />
             </div>
@@ -216,7 +216,7 @@ export function AppSidebar({ data, children }: SidebarProps) {
             <ThemeToggle />
           </div>
         </header>
-        <div className="px-2 sm:px-4">{children}</div>
+        {children}
       </SidebarInset>
     </SidebarProvider>
   );
