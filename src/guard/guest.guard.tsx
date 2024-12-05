@@ -1,15 +1,15 @@
 import { ReactNode } from "react";
 import { Navigate } from "react-router";
-import { isAuth } from "@/guard/is-auth";
+import { useAuth } from '@/hooks/use-auth.hook';
 
 interface GuestGuardProps {
   children: ReactNode;
 }
 
 export function GuestGuard({ children }: GuestGuardProps) {
-  console.log("GuestGuard");
+  const { isLogged } = useAuth();
 
-  if (isAuth) {
+  if (isLogged) {
     return <Navigate to="/home" />;
   }
 

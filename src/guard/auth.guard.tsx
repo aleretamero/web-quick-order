@@ -1,15 +1,15 @@
 import { Navigate } from "react-router";
-import { isAuth } from "@/guard/is-auth";
 import { ReactNode } from "react";
+import { useAuth } from "@/hooks/use-auth.hook";
 
 interface AuthGuardProps {
   children: ReactNode;
 }
 
 export function AuthGuard({ children }: AuthGuardProps) {
-  console.log("AuthGuard");
+  const { isLogged } = useAuth();
 
-  if (!isAuth) {
+  if (!isLogged) {
     return <Navigate to="/" />;
   }
 
