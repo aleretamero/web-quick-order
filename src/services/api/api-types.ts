@@ -9,3 +9,8 @@ export interface PaginationResponse<T = any> {
     hasNext: boolean;
   };
 }
+
+export interface DateRangeQuery {
+  from: Date;
+  to: Date;
+}
