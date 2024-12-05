@@ -7,22 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig } from "@/components/ui/chart";
+import { useGetOrdersCompletedReport } from "@/domain/report/hooks/use-orders-completed-report.hook";
 import { formatDate } from "@/helpers/formats/format-date.helper";
 import { useMemo, useState } from "react";
-
-const data = {
-  startDate: "2024-04-01",
-  endDate: "2024-04-07",
-  chartData: [
-    { date: "2024-04-01", value: 222, quantity: 150 },
-    { date: "2024-04-02", value: 97, quantity: 180 },
-    { date: "2024-04-03", value: 167, quantity: 120 },
-    { date: "2024-04-04", value: 242, quantity: 260 },
-    { date: "2024-04-05", value: 373, quantity: 290 },
-    { date: "2024-04-06", value: 301, quantity: 340 },
-    { date: "2024-04-07", value: 245, quantity: 180 },
-  ],
-};
 
 const chartConfig = {
   value: {
@@ -36,16 +23,22 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function CardBarGraphHome() {
+  const { data } = useGetOrdersCompletedReport();
+
   const [activeChart, setActiveChart] =
     useState<keyof typeof chartConfig>("value");
 
   const total = useMemo(
     () => ({
-      value: data.chartData.reduce((acc, curr) => acc + curr.value, 0),
-      quantity: data.chartData.reduce((acc, curr) => acc + curr.quantity, 0),
+      value: data?.data.reduce((acc, curr) => acc + curr.value, 0) ?? 0,
+      quantity: data?.data.reduce((acc, curr) => acc + curr.quantity, 0) ?? 0,
     }),
-    []
+    [data]
   );
+
+  if (!data) {
+    return null; //TODO skeleton
+  }
 
   return (
     <div className="col-span-12 xl:col-span-7">
@@ -82,7 +75,7 @@ export function CardBarGraphHome() {
           <BarGraph
             config={chartConfig}
             dataKey={activeChart}
-            data={data.chartData}
+            data={data.data}
           />
         </CardContent>
       </Card>
