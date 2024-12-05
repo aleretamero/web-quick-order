@@ -1,4 +1,11 @@
-export function formatDate(value?: number | string | Date): string {
+export function formatDate(
+  value?: number | string | Date,
+  options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }
+): string {
   if (value === undefined) {
     return "";
   }
@@ -9,9 +16,5 @@ export function formatDate(value?: number | string | Date): string {
     return "";
   }
 
-  return date.toLocaleDateString("pt-BR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  return date.toLocaleDateString("pt-BR", options);
 }
