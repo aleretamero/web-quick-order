@@ -1,12 +1,25 @@
 import { CardInfo } from "@/components/card/card-info";
+import { useGetCardsDashboardReport } from "@/domain/report/hooks/use-get-cards-dashboard-report.hook";
+import { formatCurrency } from "@/helpers/formats/format-currency.helper";
 
 export function CardsInfoHome() {
+  const { data } = useGetCardsDashboardReport();
+
+  if (!data) {
+    return null; //TODO skeleton
+  }
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <CardInfo
-        title="Total Revenue"
-        value="$45,231.89"
-        description="+20.1% from last month"
+        title="Hoje"
+        value={formatCurrency(data.today.receivedPrice)}
+        descriptions={[
+          `${formatCurrency(data.today.salePrice)} valor bruto`,
+          `${data.today.quantity} ${
+            data.today.quantity === 1 ? "venda" : "vendas"
+          }`,
+        ]}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +36,14 @@ export function CardsInfoHome() {
         }
       />
       <CardInfo
-        title="Subscriptions"
-        value="+2350"
-        description="+180.1% from last month"
+        title="Ontem"
+        value={formatCurrency(data.yesterday.receivedPrice)}
+        descriptions={[
+          `${formatCurrency(data.yesterday.salePrice)} valor bruto`,
+          `${data.yesterday.quantity} ${
+            data.yesterday.quantity === 1 ? "venda" : "vendas"
+          }`,
+        ]}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -37,16 +55,19 @@ export function CardsInfoHome() {
             strokeWidth="2"
             className="h-4 w-4 text-muted-foreground"
           >
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
         }
       />
       <CardInfo
-        title="Sales"
-        value="+12,234"
-        description="+19% from last month"
+        title="Nessa semana"
+        value={formatCurrency(data.thisWeek.receivedPrice)}
+        descriptions={[
+          `${formatCurrency(data.thisWeek.salePrice)} valor bruto`,
+          `${data.thisWeek.quantity} ${
+            data.thisWeek.quantity === 1 ? "venda" : "vendas"
+          }`,
+        ]}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,15 +79,19 @@ export function CardsInfoHome() {
             strokeWidth="2"
             className="h-4 w-4 text-muted-foreground"
           >
-            <rect width="20" height="14" x="2" y="5" rx="2" />
-            <path d="M2 10h20" />
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
         }
       />
       <CardInfo
-        title="Active Now"
-        value="+573"
-        description="+201 since last hour"
+        title="Esse mês"
+        value={formatCurrency(data.thisMonth.receivedPrice)}
+        descriptions={[
+          `${formatCurrency(data.thisMonth.salePrice)} valor bruto`,
+          `${data.thisMonth.quantity} ${
+            data.thisMonth.quantity === 1 ? "venda" : "vendas"
+          }`,
+        ]}
         icon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +103,7 @@ export function CardsInfoHome() {
             strokeWidth="2"
             className="h-4 w-4 text-muted-foreground"
           >
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
           </svg>
         }
       />
