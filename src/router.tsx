@@ -5,51 +5,57 @@ import { LoginPage } from "@/pages/login.page";
 import { HomePage } from "@/pages/home.page";
 import { OrdersPage } from "@/pages/orders.page";
 import { CreateOrderPage } from "@/pages/create-order.page";
-import { OrderDetailsPagePage } from "@/pages/order-details.page";
+import { OrderDetailsPage } from "@/pages/order-details.page";
 import { DashboardLayout } from "@/layouts/dashboard.layout";
-import { AuthLayout } from '@/layouts/auth.layout';
+import { AuthLayout } from "@/layouts/auth.layout";
+import { RootLayout } from "@/layouts/root.layout";
 
 export const router = createBrowserRouter([
   {
-    element: (
-      <GuestGuard>
-        <AuthLayout />
-      </GuestGuard>
-    ),
+    element: <RootLayout />,
     children: [
       {
-        path: "/",
-        element: <LoginPage />,
+        element: (
+          <GuestGuard>
+            <AuthLayout />
+          </GuestGuard>
+        ),
+        children: [
+          {
+            path: "/",
+            element: <LoginPage />,
+          },
+        ],
+      },
+      {
+        element: (
+          <AuthGuard>
+            <DashboardLayout />
+          </AuthGuard>
+        ),
+        children: [
+          {
+            path: "/home",
+            element: <HomePage />,
+          },
+          {
+            path: "orders",
+            element: <OrdersPage />,
+          },
+          {
+            path: "orders/create",
+            element: <CreateOrderPage />,
+          },
+          {
+            path: "orders/:id",
+            element: <OrderDetailsPage />,
+          },
+        ],
+      },
+      {
+        path: "*",
+        element: <h1>404 Not Found</h1>,
       },
     ],
-  },
-  {
-    element: (
-      <AuthGuard>
-        <DashboardLayout />
-      </AuthGuard>
-    ),
-    children: [
-      {
-        path: "/home",
-        element: <HomePage />,
-      },
-      {
-        path: "orders",
-        element: <OrdersPage />,
-      },
-      {
-        path: "orders/create",
-        element: <CreateOrderPage />,
-      },
-      {
-        path: "orders/:id",
-        element: <OrderDetailsPagePage />,
-      },
-    ],
-  },
-  {
-    path: "*",
-    element: <h1>404 Not Found</h1>,
   },
 ]);
