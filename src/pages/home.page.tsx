@@ -1,5 +1,5 @@
 import { CardsGraphsHome } from "@/components/app/home/cards-graphs-home.component";
-import { CardsInfoHome } from "@/components/app/home/cards-info-home-component";
+import { CardsInfoHome } from "@/components/app/home/cards-info-home.component";
 import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
 import { PageContainer } from "@/components/layout/page-container.component";
 
