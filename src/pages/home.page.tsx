@@ -1,6 +1,6 @@
+import { CardBarGraphHome } from "@/components/app/home/card-bar-graph-home.component";
 import { CardsInfoHome } from "@/components/app/home/cards-info-home-component";
 import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
-import { BarGraph } from "@/components/graph/bar-graph.component";
 import { PieGraph } from "@/components/graph/pie-graph.component";
 import PageContainer from "@/components/layout/page-container.component";
 
@@ -18,9 +18,7 @@ export function HomePage() {
         </div>
         <CardsInfoHome />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <div className="col-span-4">
-            <BarGraph />
-          </div>
+          <CardBarGraphHome />
           <div className="col-span-4 lg:col-span-3">
             <PieGraph />
           </div>
