@@ -8,7 +8,7 @@ import { TextAreaForm } from "@/components/form/text-area-form.component";
 import { FileUploadForm } from "@/components/form/file-upload-form.component";
 import { Form } from "@/components/form/form.component";
 import { useCreateOrder } from "@/domain/orders/hooks/create-order.hook";
-import PageContainer from "@/components/layout/page-container.component";
+import { PageContainer } from "@/components/layout/page-container.component";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [

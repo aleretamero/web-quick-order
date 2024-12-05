@@ -2,7 +2,7 @@ import { CardBarGraphHome } from "@/components/app/home/card-bar-graph-home.comp
 import { CardsInfoHome } from "@/components/app/home/cards-info-home-component";
 import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
 import { PieGraph } from "@/components/graph/pie-graph.component";
-import PageContainer from "@/components/layout/page-container.component";
+import { PageContainer } from "@/components/layout/page-container.component";
 
 export function HomePage() {
   return (

@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/data-table/data-table.component";
 import { BoxMultipleFilter } from "@/components/filter/box-multiple-filter.component";
 import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
-import PageContainer from "@/components/layout/page-container.component";
+import { PageContainer } from "@/components/layout/page-container.component";
 import { OrderStatus } from "@/domain/orders/enums/order-status.enum";
 import { useGetOrders } from "@/domain/orders/hooks/use-get-orders.hook";
 import { OrderModel } from "@/domain/orders/models/order.model";
