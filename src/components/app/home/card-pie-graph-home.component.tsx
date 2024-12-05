@@ -66,7 +66,7 @@ export function CardPieGraphHome() {
   }, []);
 
   return (
-    <div className="col-span-4 lg:col-span-3">
+    <div className="col-span-12 xl:col-span-5">
       <Card className="w-full h-full flex flex-col">
         <CardHeader className="items-center pb-0">
           <CardTitle>Pedidos por Status</CardTitle>
