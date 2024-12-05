@@ -1,14 +1,19 @@
-import { RootLayout } from "@/layouts/root.layout";
-import { ThemeProvider } from "@/contexts/theme.context";
 import { router } from "@/router";
 import { RouterProvider } from "react-router";
+import { NuqsAdapter } from "nuqs/adapters/react";
+import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export function App() {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <ThemeProvider>
-      <RootLayout>
+    <QueryClientProvider client={queryClient}>
+      <NuqsAdapter>
         <RouterProvider router={router} />
-      </RootLayout>
-    </ThemeProvider>
+      </NuqsAdapter>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
