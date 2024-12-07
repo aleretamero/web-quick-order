@@ -5,7 +5,7 @@ import { useQuryParamsDateRange } from "@/hooks/use-query-params-data-range.hook
 export function useGetOrdersCompletedReport() {
   const { initialDate, finalDate } = useQuryParamsDateRange();
   return useQuery({
-    queryKey: [`/reports//reports/orders-completed`, initialDate, finalDate],
+    queryKey: [`/reports/reports/orders-completed`, initialDate, finalDate],
     queryFn: () => {
       if (!initialDate || !finalDate) {
         return null;
