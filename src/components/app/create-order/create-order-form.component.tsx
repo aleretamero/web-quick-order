@@ -6,6 +6,7 @@ import { FileUploadForm } from "@/components/form/file-upload-form.component";
 import { Form } from "@/components/form/form.component";
 import { useCreateOrder } from "@/domain/orders/hooks/create-order.hook";
 import { useForm } from "@/hooks/use-form.hook";
+import { InputDatePickerForm } from "@/components/form/input-date-picker-form.component";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -16,6 +17,7 @@ const ACCEPTED_IMAGE_TYPES = [
 ];
 
 const formSchema = z.object({
+  date: z.coerce.date(),
   image: z
     .any()
     .refine((files) => files?.length == 1, "Image is required.")
@@ -38,6 +40,7 @@ export function CreateOrderForm() {
   const form = useForm({
     schema: formSchema,
     defaultValues: {
+      date: new Date(),
       salePrice: 0,
       receivedPrice: 0,
       description: "",
@@ -46,6 +49,7 @@ export function CreateOrderForm() {
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
     mutate({
+      date: values.date,
       description: values.description,
       salePrice: values.salePrice,
       receivedPrice: values.receivedPrice,
@@ -55,6 +59,11 @@ export function CreateOrderForm() {
 
   return (
     <Form form={form} onSubmit={handleSubmit}>
+      <InputDatePickerForm
+        form={form}
+        name="date"
+        className="col-span-12 items-end"
+      />
       <FileUploadForm form={form} name="image" className="col-span-12" />
       <InputCurrencyForm
         form={form}
