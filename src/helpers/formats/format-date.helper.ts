@@ -6,7 +6,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export function formatDate(
-  value: Date | string | number,
+  value?: Date | string | number,
   format: string = "DD/MM/YYYY"
 ): string {
   if (typeof value === "string" && value.includes("/")) {
