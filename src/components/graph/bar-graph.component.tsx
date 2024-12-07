@@ -39,19 +39,14 @@ export function BarGraph<T>({
           axisLine={false}
           tickMargin={8}
           minTickGap={32}
-          tickFormatter={(value) =>
-            formatDate(value, {
-              month: "short",
-              day: "numeric",
-            })
-          }
+          tickFormatter={(value) => formatDate(value, "DD/MMM")}
         />
         <ChartTooltip
           content={
             <ChartTooltipContent
               className="w-[150px]"
               nameKey="views"
-              labelFormatter={(value) => formatDate(value)}
+              labelFormatter={(value) => formatDate(value, "DD/MM/YYYY")}
             />
           }
         />
