@@ -51,7 +51,12 @@ export function OrdersTable() {
           </span>
         ),
         cell: ({ row }) => (
-          <span className="truncate ">{row.original.description}</span>
+          <span
+            className="truncate block w-48"
+            title={row.original.description}
+          >
+            {row.original.description}
+          </span>
         ),
       },
       {
