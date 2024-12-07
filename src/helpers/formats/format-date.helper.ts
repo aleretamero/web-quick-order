@@ -1,20 +1,28 @@
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 export function formatDate(
-  value?: number | string | Date,
-  options: Intl.DateTimeFormatOptions = {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }
+  value: Date | string | number,
+  format: string = "DD/MM/YYYY"
 ): string {
-  if (value === undefined) {
+  if (typeof value === "string" && value.includes("/")) {
+    const [day, month, year] = value.split("/");
+    value = `${year}-${month}-${day}`;
+  }
+
+  if (value === undefined || isNaN(new Date(value).getTime())) {
     return "";
   }
 
-  const date = new Date(value);
+  try {
+    return dayjs(value).tz("America/Sao_Paulo").utc(true).format(format);
+  } catch (error) {
+    console.error("Error formatting date", error);
 
-  if (isNaN(date.getTime())) {
     return "";
   }
-
-  return date.toLocaleDateString("pt-BR", options);
 }
