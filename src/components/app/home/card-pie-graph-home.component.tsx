@@ -7,63 +7,48 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig } from "@/components/ui/chart";
-import { OrderStatus } from "@/domain/orders/enums/order-status.enum";
+import { useGetOrdersStatusReport } from "@/domain/report/hooks/use-orders-status-report.hook";
 import { formatDate } from "@/helpers/formats/format-date.helper";
 import { useMemo } from "react";
-
-const data = {
-  startDate: "2024-04-01",
-  endDate: "2024-04-07",
-  chartData: [
-    {
-      status: OrderStatus.PENDING,
-      quantity: 275,
-      fill: "var(--color-pending)",
-    },
-    {
-      status: OrderStatus.PROCESSING,
-      quantity: 200,
-      fill: "var(--color-processing)",
-    },
-    {
-      status: OrderStatus.CANCELED,
-      quantity: 287,
-      fill: "var(--color-canceled)",
-    },
-    {
-      status: OrderStatus.COMPLETED,
-      quantity: 173,
-      fill: "var(--color-completed)",
-    },
-  ],
-};
 
 const chartConfig = {
   quantity: {
     label: "Total",
   },
-  pending: {
-    label: OrderStatus.PENDING,
+  PENDING: {
+    label: "Pendente",
     color: "hsl(var(--chart-1))",
   },
-  processing: {
-    label: OrderStatus.PROCESSING,
+  PROCESSING: {
+    label: "Processando",
     color: "hsl(var(--chart-2))",
   },
-  canceled: {
-    label: OrderStatus.CANCELED,
+  CANCELED: {
+    label: "Cancelado",
     color: "hsl(var(--chart-3))",
   },
-  completed: {
-    label: OrderStatus.COMPLETED,
+  COMPLETED: {
+    label: "Finalizado",
     color: "hsl(var(--chart-4))",
   },
 } satisfies ChartConfig;
 
 export function CardPieGraphHome() {
+  const { data } = useGetOrdersStatusReport();
+
   const total = useMemo(() => {
-    return data.chartData.reduce((acc, curr) => acc + curr.quantity, 0);
-  }, []);
+    return data?.data.reduce((acc, curr) => acc + curr.quantity, 0) ?? 0;
+  }, [data]);
+
+  const chartData = useMemo(() => {
+    return (
+      data?.data.map((item) => ({
+        ...item,
+        label: (chartConfig as any)[item.status.toLowerCase()]?.label,
+        fill: (chartConfig as any)[item.status]?.color,
+      })) ?? []
+    );
+  }, [data]);
 
   return (
     <div className="col-span-12 xl:col-span-5">
@@ -71,12 +56,12 @@ export function CardPieGraphHome() {
         <CardHeader className="items-center pb-0">
           <CardTitle>Pedidos por Status</CardTitle>
           <CardDescription>
-            {formatDate(data.startDate)} a {formatDate(data.endDate)}
+            {formatDate(data?.startDate)} a {formatDate(data?.endDate)}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
           <PieGraph
-            data={data.chartData}
+            data={chartData}
             config={chartConfig}
             total={total.toLocaleString()}
             label="Pedidos"
