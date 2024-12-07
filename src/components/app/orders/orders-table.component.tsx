@@ -4,6 +4,7 @@ import { DataTable } from "@/components/data-table/data-table.component";
 import { useGetOrders } from "@/domain/orders/hooks/use-get-orders.hook";
 import { OrderModel } from "@/domain/orders/models/order.model";
 import { formatCurrency } from "@/helpers/formats/format-currency.helper";
+import { formatDate } from "@/helpers/formats/format-date.helper";
 
 export function OrdersTable() {
   const { data, isLoading, totalItems } = useGetOrders();
@@ -23,6 +24,15 @@ export function OrdersTable() {
             />
           </div>
         ),
+      },
+      {
+        accessorKey: "date",
+        header: () => (
+          <span className="w-fit">
+            <span className="hidden md:inline-block">Data</span>
+          </span>
+        ),
+        cell: ({ row }) => <span>{formatDate(row.original.date)}</span>,
       },
       {
         accessorKey: "status",
