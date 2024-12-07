@@ -5,7 +5,7 @@ import { CreateOrderForm } from "@/components/app/create-order/create-order-form
 export function CreateOrderPage() {
   return (
     <PageContainer scrollable>
-      <Card className="mx-auto w-full my-4">
+      <Card className="mx-auto w-full my-4 max-w-5xl">
         <CardHeader className="px-2 sm:p-6">
           <CardTitle className="text-left text-2xl font-bold">
             Novo Pedido
