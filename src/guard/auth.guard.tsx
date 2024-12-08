@@ -9,7 +9,6 @@ interface AuthGuardProps {
 export function AuthGuard({ children }: AuthGuardProps) {
   const { isLogged } = useAuth();
   const location = useLocation();
-  console.log("🚀 ~ AuthGuard ~ location:", location);
 
   if (isLogged === undefined) {
     return null; // TODO or loading component

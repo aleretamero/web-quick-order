@@ -9,7 +9,6 @@ interface GuestGuardProps {
 export function GuestGuard({ children }: GuestGuardProps) {
   const { isLogged } = useAuth();
   const location = useLocation();
-  console.log("🚀 ~ GuestGuard ~ location:", location)
 
   if (isLogged === undefined) {
     return null; // TODO or loading component
