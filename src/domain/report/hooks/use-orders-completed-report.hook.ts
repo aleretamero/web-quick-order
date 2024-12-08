@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getOrdersCompletedReport } from "@/domain/report/actions/get-orders-completed-report.action";
-import { useQuryParamsDateRange } from "@/hooks/use-query-params-data-range.hook";
+import { useQueryParamsDateRange } from "@/hooks/use-query-params-data-range.hook";
 
 export function useGetOrdersCompletedReport() {
-  const { initialDate, finalDate } = useQuryParamsDateRange();
+  const { initialDate, finalDate } = useQueryParamsDateRange();
   return useQuery({
     queryKey: [`/reports/reports/orders-completed`, initialDate, finalDate],
     queryFn: () => {
