@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
   const [dataUser, setDataUser] = React.useState<UserModel | null>(null);
-  const isLogged = !!dataUser;
+  const [isLogged, setIsLogged] = React.useState<boolean>();
 
   const logged = React.useCallback(
     (data: UserModel) => {
@@ -78,6 +78,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       getUser();
     }
   }, [getUser]);
+
+  React.useEffect(() => {
+    setIsLogged(!!dataUser);
+  }, [dataUser]);
 
   return (
     <AuthContext.Provider
