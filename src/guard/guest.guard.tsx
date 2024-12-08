@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { Navigate } from "react-router";
-import { useAuth } from '@/hooks/use-auth.hook';
+import { Navigate, useLocation } from "react-router";
+import { useAuth } from "@/hooks/use-auth.hook";
 
 interface GuestGuardProps {
   children: ReactNode;
@@ -8,9 +8,15 @@ interface GuestGuardProps {
 
 export function GuestGuard({ children }: GuestGuardProps) {
   const { isLogged } = useAuth();
+  const location = useLocation();
+  console.log("🚀 ~ GuestGuard ~ location:", location)
+
+  if (isLogged === undefined) {
+    return null; // TODO or loading component
+  }
 
   if (isLogged) {
-    return <Navigate to="/home" />;
+    return <Navigate to={`home${location.search}`} />;
   }
 
   return children;
