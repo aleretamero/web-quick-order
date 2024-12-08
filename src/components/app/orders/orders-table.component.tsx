@@ -5,9 +5,11 @@ import { useGetOrders } from "@/domain/orders/hooks/use-get-orders.hook";
 import { OrderModel } from "@/domain/orders/models/order.model";
 import { formatCurrency } from "@/helpers/formats/format-currency.helper";
 import { formatDate } from "@/helpers/formats/format-date.helper";
+import { useNavigate } from "react-router";
 
 export function OrdersTable() {
   const { data, isLoading, totalItems } = useGetOrders();
+  const navigate = useNavigate();
 
   const columns: ColumnDef<OrderModel>[] = useMemo(
     () => [
@@ -89,5 +91,12 @@ export function OrdersTable() {
     return <div>Loading...</div>; // skeleton
   }
 
-  return <DataTable columns={columns} data={data} totalItems={totalItems} />;
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      totalItems={totalItems}
+      onRowClick={(row) => navigate(`/orders/${row.id}`)}
+    />
+  );
 }
