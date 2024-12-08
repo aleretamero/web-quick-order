@@ -39,6 +39,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/theme-toggle.component";
+import { useAuth } from "@/hooks/use-auth.hook";
 
 const company = {
   name: "Acme Inc",
@@ -62,6 +63,7 @@ interface SidebarProps {
 export function AppSidebar({ data, children }: SidebarProps) {
   const [mounted, setMounted] = React.useState(false);
   const { pathname } = useLocation();
+  const { logout } = useAuth();
 
   React.useEffect(() => {
     setMounted(true);
@@ -194,7 +196,7 @@ export function AppSidebar({ data, children }: SidebarProps) {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>
                     <LogOut />
                     Log out
                   </DropdownMenuItem>
