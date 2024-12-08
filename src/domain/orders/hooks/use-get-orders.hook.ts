@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/use-pagination.hook";
 import { getOrdersAction } from "@/domain/orders/actions/get-orders.action";
+import { useQueryParamsDateRange } from "@/hooks/use-query-params-data-range.hook";
+import { useQueryParamsOrderStatus } from "@/domain/orders/hooks/use-query-params-order-status";
 
 export function useGetOrders() {
   const {
@@ -12,12 +14,18 @@ export function useGetOrders() {
     calculateTotalPages,
   } = usePagination();
 
+  const { initialDate, finalDate } = useQueryParamsDateRange();
+  const { value } = useQueryParamsOrderStatus();
+
   const query = useInfiniteQuery({
-    queryKey: ["/orders", { page, limit }],
+    queryKey: ["/orders", page, limit, initialDate, finalDate, value],
     queryFn: async ({ pageParam }) =>
       await getOrdersAction({
         page: pageParam,
         limit,
+        from: initialDate ?? new Date(),
+        to: finalDate ?? new Date(),
+        status: value,
       }).then((response) => response.data),
     initialPageParam: page,
     getPreviousPageParam,
