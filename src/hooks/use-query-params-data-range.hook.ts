@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { parseAsIsoDate, useQueryState } from "nuqs";
 
-export function useQuryParamsDateRange() {
+export function useQueryParamsDateRange() {
   const defaultInitialDate = useMemo(() => null, []);
   const initialDateKey = useMemo(() => "initial_date", []);
   const [initialDate, setInitialDate] = useQueryState(

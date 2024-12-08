@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useQuryParamsDateRange } from "@/hooks/use-query-params-data-range.hook";
+import { useQueryParamsDateRange } from "@/hooks/use-query-params-data-range.hook";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -17,7 +17,7 @@ export function DateRangePickerFilter({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const { initialDate, finalDate, setInitialDate, setFinalDate } =
-    useQuryParamsDateRange();
+    useQueryParamsDateRange();
 
   const [date, setDate] = React.useState<DateRange | undefined>(() => {
     const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
