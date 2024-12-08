@@ -1,4 +1,4 @@
-export type QueryParams = { [key: string]: unknown };
+export type QueryParams = { [key: string]: unknown } | URLSearchParams;
 
 export type Headers = { [key: string]: string };
 
