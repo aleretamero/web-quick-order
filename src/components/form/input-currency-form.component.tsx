@@ -25,11 +25,7 @@ export const InputCurrencyForm = <T extends FieldValues>({
   ...props
 }: InputCurrencyFormProps<T>) => {
   const initialValue =
-    props.value !== undefined
-      ? formatCurrency(props.value.toString())
-      : form.getValues()[name]
-      ? formatCurrency(form.getValues()[name])
-      : "";
+    props.value !== undefined ? formatCurrency(props.value.toString()) : "";
 
   const [value, setValue] = React.useReducer((_: string, next: string) => {
     const digits = next.replace(/\D/g, "");
