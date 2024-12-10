@@ -6,6 +6,7 @@ import { OrderModel } from "@/domain/orders/models/order.model";
 import { formatCurrency } from "@/helpers/formats/format-currency.helper";
 import { formatDate } from "@/helpers/formats/format-date.helper";
 import { useNavigate } from "react-router";
+import { BadgeOrderStatus } from "@/components/app/orders/badge-order-status.component";
 
 export function OrdersTable() {
   const { data, isLoading, totalItems } = useGetOrders();
@@ -43,7 +44,7 @@ export function OrdersTable() {
             <span className="hidden md:inline-block">Status</span>
           </span>
         ),
-        cell: ({ row }) => <span>{row.original.status}</span>,
+        cell: ({ row }) => <BadgeOrderStatus status={row.original.status} />,
       },
       {
         accessorKey: "description",
