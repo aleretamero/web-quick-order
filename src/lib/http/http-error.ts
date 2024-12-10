@@ -1,9 +1,11 @@
-export class HttpError<T = any> extends Error {
+import { ErrorResponse } from "@/lib/http/http-types";
+
+export class HttpError extends Error {
   ok: boolean;
   status: number;
-  data: T;
+  data: ErrorResponse;
 
-  constructor(status: number, data: T) {
+  constructor(status: number, data: ErrorResponse) {
     super(`Http error: ${status}`);
     this.ok = false;
     this.status = status;

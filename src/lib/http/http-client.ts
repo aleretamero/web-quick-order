@@ -113,7 +113,11 @@ export class HttpClient {
         throw new HttpError(status, data);
       }
 
-      throw new HttpError(500, { message: "Internal server error" });
+      throw new HttpError(500, {
+        statusCode: 500,
+        message: "Internal server error",
+        errors: ["Internal server error"],
+      });
     }
   }
 }

@@ -15,3 +15,9 @@ export type Response<T = any> = {
   data: T;
   status: number;
 };
+
+export type ErrorResponse = {
+  statusCode: number;
+  message: string;
+  errors: string[];
+}
