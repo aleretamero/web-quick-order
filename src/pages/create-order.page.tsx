@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageContainer } from "@/components/layout/page-container.component";
-import { CreateOrderForm } from "@/components/app/orders/create/create-order-form.component";
+import { SaveOrderForm } from "@/components/app/orders/create/save-order-form.component";
 
 export function CreateOrderPage() {
   return (
@@ -12,7 +12,7 @@ export function CreateOrderPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="px-2 sm:p-6">
-          <CreateOrderForm />
+          <SaveOrderForm />
         </CardContent>
       </Card>
     </PageContainer>
