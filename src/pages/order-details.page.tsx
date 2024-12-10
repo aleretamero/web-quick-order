@@ -1,4 +1,4 @@
-import { CardOrderDetails } from "@/components/app/orders/card-order-details.component";
+import { CardOrderDetails } from "@/components/app/orders/details/card-order-details.component";
 import { PageContainer } from "@/components/layout/page-container.component";
 import { useGetOrder } from "@/domain/orders/hooks/get-order.hook";
 import { useParams } from "react-router";
