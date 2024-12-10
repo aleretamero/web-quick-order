@@ -5,11 +5,11 @@ interface FieldProps {
 
 export function Field({ label, value }: FieldProps) {
   return (
-    <div className="flex justify-between py-2 border-b border-gray-200">
-      <span className="text-sm font-medium text-gray-500 dark:text-neutral-400">
+    <div className="flex gap-2 py-2">
+      <span className="text-md font-medium text-gray-500 dark:text-neutral-400">
         {label}
       </span>
-      <span className="text-sm text-gray-900 dark:text-neutral-50">
+      <span className="text-md font-medium text-gray-900 dark:text-neutral-50">
         {value}
       </span>
     </div>
