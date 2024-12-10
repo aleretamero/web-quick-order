@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from "@/contexts/auth.context";
 import { ThemeContext, ThemeProvider } from "@/contexts/theme.context";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ export function RootLayout() {
           {({ theme }) => (
             <div className={cn("w-full", theme)}>
               <Outlet />
+              <Toaster />
             </div>
           )}
         </ThemeContext.Consumer>
