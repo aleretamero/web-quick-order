@@ -1,7 +1,7 @@
 import { BadgeOrderStatus } from "@/components/app/orders/badge-order-status.component";
 import { EditButtonIcon } from "@/components/button/edit-button";
 import { TrashButtonIcon } from "@/components/button/trash-button";
-import { Alert } from "@/components/layout/alert.component";
+import { Alert } from "@/components/feedback/alert.component";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
