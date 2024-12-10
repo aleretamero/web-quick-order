@@ -7,6 +7,8 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { AuthLoginDto, loginAction } from "@/domain/auth/actions/login.action";
 import { AuthLoginModel } from "@/domain/auth/models/auth-login.model";
 import { logoutAction } from "@/domain/auth/actions/logout.action";
+import { useToast } from "@/hooks/use-toast.hook";
+import { HttpError } from "@/lib/http/http-error";
 
 interface AuthContextProps {
   logout: () => void;
@@ -21,6 +23,7 @@ export const AuthContext = React.createContext({} as AuthContextProps);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
 
   const [dataUser, setDataUser] = React.useState<UserModel | null>(null);
   const [isLogged, setIsLogged] = React.useState<boolean>();
@@ -52,6 +55,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       TokenService.saveTokens(data);
       await getUser();
       navigate("/home");
+    },
+    onError: (error: HttpError) => {
+      toast.error(error.data.errors);
     },
   });
 
