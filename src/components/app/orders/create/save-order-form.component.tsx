@@ -8,9 +8,8 @@ import { useCreateOrder } from "@/domain/orders/hooks/create-order.hook";
 import { useForm } from "@/hooks/use-form.hook";
 import { InputDatePickerForm } from "@/components/form/input-date-picker-form.component";
 import { OrderModel } from "@/domain/orders/models/order.model";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useUpdateOrder } from "@/domain/orders/hooks/update-order.hook";
+import { useEffect } from "react";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -59,12 +58,12 @@ const updateOrderSchema = z.object({
 
 interface SaveOrderFormProps {
   order?: OrderModel;
+  onSuccess?: () => void;
 }
 
-export function SaveOrderForm({ order }: SaveOrderFormProps) {
-  const { mutate: createMutate, isSuccess: isSuccessCreate } = useCreateOrder();
-  const { mutate: updateMutate } = useUpdateOrder();
-  const navigate = useNavigate();
+export function SaveOrderForm({ order, onSuccess }: SaveOrderFormProps) {
+  const { mutate: createMutate, isSuccess: createSuccess } = useCreateOrder();
+  const { mutate: updateMutate, isSuccess: updateSuccess } = useUpdateOrder();
 
   const form = useForm({
     schema: order ? updateOrderSchema : createOrderSchema,
@@ -78,31 +77,31 @@ export function SaveOrderForm({ order }: SaveOrderFormProps) {
 
   function handleSubmit(values: z.infer<typeof createOrderSchema>) {
     if (!order) {
-      return createMutate({
+      createMutate({
         date: values.date,
         description: values.description,
         salePrice: values.salePrice,
         receivedPrice: values.receivedPrice,
         image: values.image[0],
       });
+    } else {
+      updateMutate({
+        id: order.id,
+        date: values.date,
+        description: values.description,
+        salePrice: values.salePrice,
+        receivedPrice: values.receivedPrice,
+        image: values.image?.[0],
+      });
     }
-
-    updateMutate({
-      id: order.id,
-      date: values.date,
-      description: values.description,
-      salePrice: values.salePrice,
-      receivedPrice: values.receivedPrice,
-      image: values.image?.[0],
-    });
   }
 
   useEffect(() => {
-    if (isSuccessCreate) {
-      navigate("/orders");
+    if (createSuccess || updateSuccess) {
+      onSuccess?.();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccessCreate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createSuccess, updateSuccess]);
 
   return (
     <Form form={form} onSubmit={handleSubmit}>
