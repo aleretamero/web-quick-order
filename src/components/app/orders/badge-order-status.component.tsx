@@ -2,13 +2,17 @@ import { Badge } from "@/components/ui/badge";
 import { OrderStatus } from "@/domain/orders/enums/order-status.enum";
 import { cn } from "@/lib/utils";
 
+interface BadgeOrderStatusProps {
+  size?: "small" | "medium" | "large";
+  status: OrderStatus;
+  className?: string;
+}
+
 export function BadgeOrderStatus({
   size = "medium",
   status,
-}: {
-  size?: "small" | "medium" | "large";
-  status: OrderStatus;
-}) {
+  className,
+}: BadgeOrderStatusProps) {
   const statusColor = {
     PENDING: "bg-yellow-500 dark:bg-yellow-400",
     PROCESSING: "bg-blue-500 dark:bg-blue-400",
@@ -27,12 +31,16 @@ export function BadgeOrderStatus({
 
   return (
     <Badge
-      className={cn("hover:bg-none dark:hover:bg-none", {
-        [statusColor[status]]: statusColor[status],
-        "text-xs": size === "small",
-        "text-sm": size === "medium",
-        "text-xl": size === "large",
-      })}
+      className={cn(
+        "hover:bg-none dark:hover:bg-none",
+        {
+          [statusColor[status]]: statusColor[status],
+          "text-xs": size === "small",
+          "text-sm": size === "medium",
+          "text-xl": size === "large",
+        },
+        className
+      )}
     >
       {statusText[status]}
     </Badge>
