@@ -8,6 +8,8 @@ import { useCreateOrder } from "@/domain/orders/hooks/create-order.hook";
 import { useForm } from "@/hooks/use-form.hook";
 import { InputDatePickerForm } from "@/components/form/input-date-picker-form.component";
 import { OrderModel } from "@/domain/orders/models/order.model";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -59,7 +61,8 @@ interface SaveOrderFormProps {
 }
 
 export function SaveOrderForm({ order }: SaveOrderFormProps) {
-  const { mutate: createMutate } = useCreateOrder();
+  const { mutate: createMutate, isSuccess: isSuccessCreate } = useCreateOrder();
+  const navigate = useNavigate();
 
   const form = useForm({
     schema: order ? updateOrderSchema : createOrderSchema,
@@ -85,6 +88,13 @@ export function SaveOrderForm({ order }: SaveOrderFormProps) {
 
     console.log("Update order", values);
   }
+
+  useEffect(() => {
+    if (isSuccessCreate) {
+      navigate("/orders");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccessCreate]);
 
   return (
     <Form form={form} onSubmit={handleSubmit}>
