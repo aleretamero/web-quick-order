@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useLocation, useNavigate } from "react-router";
 import { UserModel } from "@/domain/user/models/user.model";
 import { loadMeAction } from "@/domain/auth/actions/load-me.action";
 import { TokenService } from "@/services/api/tokens-service";
@@ -21,21 +20,14 @@ interface AuthContextProps {
 export const AuthContext = React.createContext({} as AuthContextProps);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const toast = useToast();
 
   const [dataUser, setDataUser] = React.useState<UserModel | null>(null);
   const [isLogged, setIsLogged] = React.useState<boolean>();
 
-  const logged = React.useCallback(
-    (data: UserModel) => {
-      setDataUser(data);
-      navigate(`${location.pathname}${location.search}`);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [navigate]
-  );
+  const logged = React.useCallback((data: UserModel) => {
+    setDataUser(data);
+  }, []);
 
   const logout = React.useCallback(async () => {
     try {
@@ -43,9 +35,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setDataUser(null);
       TokenService.removeTokens();
-      navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const login = useMutation({
@@ -54,7 +44,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     onSuccess: async (data) => {
       TokenService.saveTokens(data);
       await getUser();
-      navigate("/home");
     },
     onError: (error: HttpError) => {
       toast.error(error.data.errors);
