@@ -18,6 +18,16 @@ export function useQueryParamsDateRange() {
     setFinalDate(defaultFinalDate);
   }, [defaultInitialDate, defaultFinalDate, setInitialDate, setFinalDate]);
 
+  const setDefaultDateRange = useCallback(() => {
+    const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
+    const endDate = finalDate ?? new Date();
+    const startDate = initialDate ?? new Date(endDate.getTime() - ONE_WEEK);
+
+    setInitialDate(startDate);
+    setFinalDate(endDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return {
     initialDate,
     setInitialDate,
@@ -26,5 +36,6 @@ export function useQueryParamsDateRange() {
     setFinalDate,
     finalDateKey,
     resetDateRange,
+    setDefaultDateRange,
   };
 }
