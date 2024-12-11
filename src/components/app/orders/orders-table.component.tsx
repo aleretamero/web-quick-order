@@ -7,12 +7,15 @@ import { formatCurrency } from "@/helpers/formats/format-currency.helper";
 import { formatDate } from "@/helpers/formats/format-date.helper";
 import { useNavigate } from "react-router";
 import { BadgeOrderStatus } from "@/components/app/orders/badge-order-status.component";
+import { useAuth } from "@/hooks/use-auth.hook";
+import { Role } from "@/domain/user/enums/role.enum";
 
 export function OrdersTable() {
+  const { dataUser } = useAuth();
   const { data, isLoading, totalItems } = useGetOrders();
   const navigate = useNavigate();
 
-  const columns: ColumnDef<OrderModel>[] = useMemo(
+  const publicColumns: ColumnDef<OrderModel>[] = useMemo(
     () => [
       {
         accessorKey: "image",
@@ -62,6 +65,12 @@ export function OrdersTable() {
           </span>
         ),
       },
+    ],
+    []
+  );
+
+  const privateColumns: ColumnDef<OrderModel>[] = useMemo(
+    () => [
       {
         accessorKey: "totalPrice",
         header: () => (
@@ -94,7 +103,11 @@ export function OrdersTable() {
 
   return (
     <DataTable
-      columns={columns}
+      columns={
+        dataUser?.role === Role.ADMIN
+          ? [...publicColumns, ...privateColumns]
+          : publicColumns
+      }
       data={data}
       totalItems={totalItems}
       onRowClick={(row) => navigate(`/orders/${row.id}`)}
