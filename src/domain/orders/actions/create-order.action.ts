@@ -1,7 +1,6 @@
 import { HttpResponse } from "@/lib/http/http-response";
 import { apiClient } from "@/services/api/api-service";
 import { OrderModel } from "@/domain/orders/models/order.model";
-import { PaginationResponse } from "@/services/api/api-types";
 import { formatDate } from "@/helpers/formats/format-date.helper";
 
 export type CreateOrderDto = {
@@ -18,7 +17,7 @@ export async function createOrderAction({
   salePrice,
   receivedPrice,
   image,
-}: CreateOrderDto): Promise<HttpResponse<PaginationResponse<OrderModel>>> {
+}: CreateOrderDto): Promise<HttpResponse<OrderModel>> {
   const formData = new FormData();
 
   formData.append("date", formatDate(date, "YYYY-MM-DD"));
@@ -27,5 +26,5 @@ export async function createOrderAction({
   formData.append("receivedPrice", receivedPrice.toString());
   formData.append("image", image);
 
-  return apiClient.post<PaginationResponse<OrderModel>>(`/orders`, formData);
+  return apiClient.post<OrderModel>(`/orders`, formData);
 }
