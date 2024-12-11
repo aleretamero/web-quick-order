@@ -15,6 +15,8 @@ interface ModalProps {
   trigger: ReactElement;
   content: ReactNode;
   footer?: ReactNode;
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => void;
 }
 
 export function Modal({
@@ -23,9 +25,11 @@ export function Modal({
   trigger,
   content,
   footer,
+  isOpen = false,
+  setIsOpen,
 }: ModalProps) {
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen} >
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent>
         {(title || description) && (
