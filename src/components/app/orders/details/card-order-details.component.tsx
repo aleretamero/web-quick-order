@@ -14,8 +14,10 @@ import { useDeleteOrder } from "@/domain/orders/hooks/delete-order.hook";
 import { useFinishOrder } from "@/domain/orders/hooks/finish-order.hook";
 import { useProcessOrder } from "@/domain/orders/hooks/process-order.hook";
 import { OrderModel } from "@/domain/orders/models/order.model";
+import { Role } from "@/domain/user/enums/role.enum";
 import { formatCurrency } from "@/helpers/formats/format-currency.helper";
 import { formatDate } from "@/helpers/formats/format-date.helper";
+import { useAuth } from "@/hooks/use-auth.hook";
 import { useNavigate } from "react-router";
 
 interface CardOrderDetailsProps {
@@ -23,6 +25,7 @@ interface CardOrderDetailsProps {
 }
 
 export function CardOrderDetails({ order }: CardOrderDetailsProps) {
+  const { dataUser } = useAuth();
   const navigate = useNavigate();
   const { mutate: deleteMutate } = useDeleteOrder();
   const { mutate: cancelMutate } = useCancelOrder();
@@ -44,14 +47,20 @@ export function CardOrderDetails({ order }: CardOrderDetailsProps) {
             <div className="flex gap-2 justify-end">
               <Modal
                 title="Editar pedido"
-                trigger={<EditButtonIcon />}
+                trigger={
+                  <EditButtonIcon disabled={dataUser?.role === Role.EMPLOYEE} />
+                }
                 content={<SaveOrderForm order={order} />}
               />
 
               <Alert
                 title="Deletar pedido"
                 description="Tem certeza que deseja deletar esse pedido?"
-                trigger={<TrashButtonIcon />}
+                trigger={
+                  <TrashButtonIcon
+                    disabled={dataUser?.role === Role.EMPLOYEE}
+                  />
+                }
                 action={() => {
                   deleteMutate(order.id);
                   navigate("/orders");
@@ -68,16 +77,18 @@ export function CardOrderDetails({ order }: CardOrderDetailsProps) {
               <div className="my-2">
                 <CardDescription>{order.description}</CardDescription>
               </div>
-              <div>
-                <Field
-                  label="Preço de venda"
-                  value={formatCurrency(order.salePrice)}
-                />
-                <Field
-                  label="Preço recebido"
-                  value={formatCurrency(order.receivedPrice)}
-                />
-              </div>
+              {dataUser?.role === Role.ADMIN && (
+                <div>
+                  <Field
+                    label="Preço de venda"
+                    value={formatCurrency(order.salePrice)}
+                  />
+                  <Field
+                    label="Preço recebido"
+                    value={formatCurrency(order.receivedPrice)}
+                  />
+                </div>
+              )}
             </div>
             <div className="flex mt-8 gap-4 items-center">
               <Button
