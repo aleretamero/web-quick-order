@@ -8,6 +8,7 @@ import { OrderDetailsPage } from "@/pages/order-details.page";
 import { DashboardLayout } from "@/layouts/dashboard.layout";
 import { AuthLayout } from "@/layouts/auth.layout";
 import { RootLayout } from "@/layouts/root.layout";
+import { AdminGuard } from "@/guard/admin.guard";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/home",
-            element: <HomePage />,
+            element: (
+              <AdminGuard>
+                <HomePage />
+              </AdminGuard>
+            ),
           },
           {
             path: "orders",
