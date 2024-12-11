@@ -1,6 +1,6 @@
 import { CardOrderDetails } from "@/components/app/orders/details/card-order-details.component";
 import { PageContainer } from "@/components/layout/page-container.component";
-import { useGetOrder } from "@/domain/orders/hooks/get-order.hook";
+import { useGetOrder } from "@/domain/orders/hooks/use-get-order.hook";
 import { useParams } from "react-router";
 
 export function OrderDetailsPage() {

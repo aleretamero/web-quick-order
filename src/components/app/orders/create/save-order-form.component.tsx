@@ -4,11 +4,11 @@ import { InputCurrencyForm } from "@/components/form/input-currency-form.compone
 import { TextAreaForm } from "@/components/form/text-area-form.component";
 import { FileUploadForm } from "@/components/form/file-upload-form.component";
 import { Form } from "@/components/form/form.component";
-import { useCreateOrder } from "@/domain/orders/hooks/create-order.hook";
+import { useCreateOrder } from "@/domain/orders/hooks/use-create-order.hook";
 import { useForm } from "@/hooks/use-form.hook";
 import { InputDatePickerForm } from "@/components/form/input-date-picker-form.component";
 import { OrderModel } from "@/domain/orders/models/order.model";
-import { useUpdateOrder } from "@/domain/orders/hooks/update-order.hook";
+import { useUpdateOrder } from "@/domain/orders/hooks/use-update-order.hook";
 import { useEffect } from "react";
 
 const MAX_FILE_SIZE = 5000000;
