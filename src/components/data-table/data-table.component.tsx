@@ -1,13 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Pagination } from "@/components/layout/pagination.component";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -17,10 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from "@radix-ui/react-icons";
-import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -28,14 +17,12 @@ import {
   PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { parseAsInteger, useQueryState } from "nuqs";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   totalItems: number;
-  pageSizeOptions?: number[];
   onRowClick?: (row: TData) => void;
 }
 
@@ -43,7 +30,6 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   totalItems,
-  pageSizeOptions = [10, 20, 30, 40, 50],
   onRowClick,
 }: DataTableProps<TData, TValue>) {
   const [currentPage, setCurrentPage] = useQueryState(
@@ -148,67 +134,7 @@ export function DataTable<TData, TValue>({
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <div className="flex items-center justify-between gap-2 pb-4 text-foreground">
-        <div>
-          <Select
-            value={`${paginationState.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={paginationState.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {pageSizeOptions.map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex flex-col items-center justify-end gap-2 sm:flex-row">
-          <div className="flex items-center gap-x-2">
-            <Button
-              aria-label="Go to first page"
-              variant="outline"
-              className="h-8 w-8 p-0"
-              onClick={() => table.setPageIndex(0)}
-              disabled={!table.getCanPreviousPage()}
-            >
-              <DoubleArrowLeftIcon className="h-4 w-4" aria-hidden="true" />
-            </Button>
-            <Button
-              aria-label="Go to previous page"
-              variant="outline"
-              className="h-8 w-8 p-0"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              <ChevronLeftIcon className="h-4 w-4" aria-hidden="true" />
-            </Button>
-            <Button
-              aria-label="Go to next page"
-              variant="outline"
-              className="h-8 w-8 p-0"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              <ChevronRightIcon className="h-4 w-4" aria-hidden="true" />
-            </Button>
-            <Button
-              aria-label="Go to last page"
-              variant="outline"
-              className="h-8 w-8 p-0"
-              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-              disabled={!table.getCanNextPage()}
-            >
-              <DoubleArrowRightIcon className="h-4 w-4" aria-hidden="true" />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Pagination totalItems={totalItems} />
     </div>
   );
 }
