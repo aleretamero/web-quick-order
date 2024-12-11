@@ -5,6 +5,14 @@ import { useQueryParamsOrderStatus } from "@/domain/orders/hooks/use-query-param
 export function OrdersFilters() {
   const { key } = useQueryParamsOrderStatus();
 
+  const statusText = {
+    PENDING: "Pendente",
+    PROCESSING: "Processando",
+    COMPLETED: "Completo",
+    CANCELED: "Cancelado",
+    DELETED: "Deletado",
+  };
+
   return (
     <div className="flex items-center gap-4">
       <BoxMultipleFilter
@@ -14,7 +22,7 @@ export function OrdersFilters() {
           .filter(([key]) => key !== OrderStatus.DELETED)
           .map(([key, value]): any => ({
             value: key,
-            label: value,
+            label: statusText[value as OrderStatus],
           }))}
         align="start"
         size="lg"
