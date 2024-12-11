@@ -12,17 +12,13 @@ type GetOrdersActionParams = {
 export async function getOrdersAction(
   query: GetOrdersActionParams
 ): Promise<HttpResponse<PaginationResponse<OrderModel>>> {
-
-
   const params = new URLSearchParams();
 
-  params.append('limit', query.limit.toString());
-  params.append('page', query.page.toString());
-  query.status.forEach((status) => params.append('status', status));
-  params.append('from', query.from.toISOString().split("T")[0]);
-  params.append('to', query.to.toISOString().split("T")[0]);
-
-
+  params.append("limit", query.limit.toString());
+  params.append("page", query.page.toString());
+  query.status.forEach((status) => params.append("status", status));
+  if (query.from) params.append("from", query.from.toISOString().split("T")[0]);
+  if (query.to) params.append("to", query.to.toISOString().split("T")[0]);
 
   return apiClient.get<PaginationResponse<OrderModel>>(`/orders`, {
     params,
