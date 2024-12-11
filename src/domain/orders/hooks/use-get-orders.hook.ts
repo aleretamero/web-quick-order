@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query";
 import { usePagination } from "@/hooks/use-pagination.hook";
 import { getOrdersAction } from "@/domain/orders/actions/get-orders.action";
@@ -13,20 +13,21 @@ export function useGetOrders() {
     getNextPageParam,
     calculateTotalPages,
   } = usePagination();
-
-  const { initialDate, finalDate } = useQueryParamsDateRange();
+  const { initialDate, finalDate, setDefaultDateRange } =
+    useQueryParamsDateRange();
   const { value } = useQueryParamsOrderStatus();
 
   const query = useInfiniteQuery({
     queryKey: ["/orders", page, limit, initialDate, finalDate, value],
-    queryFn: async ({ pageParam }) =>
-      await getOrdersAction({
+    queryFn: async ({ pageParam }) => {
+      return await getOrdersAction({
         page: pageParam,
         limit,
-        from: initialDate ?? new Date(),
-        to: finalDate ?? new Date(),
+        from: initialDate ?? undefined,
+        to: finalDate ?? undefined,
         status: value,
-      }).then((response) => response.data),
+      }).then((response) => response.data);
+    },
     initialPageParam: page,
     getPreviousPageParam,
     getNextPageParam,
@@ -48,6 +49,11 @@ export function useGetOrders() {
     () => query.data?.pages[0]?.meta.total || 0,
     [query.data]
   );
+
+  useEffect(() => {
+    if (!initialDate || !finalDate) setDefaultDateRange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     data: allOrders,
