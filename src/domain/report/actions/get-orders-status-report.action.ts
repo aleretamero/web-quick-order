@@ -8,8 +8,8 @@ export async function getOrdersStatusReport(
 ): Promise<HttpResponse<OrdersStatusReportModel>> {
   return apiClient.get<OrdersStatusReportModel>(`/reports/orders-status`, {
     params: {
-      from: query.from.toISOString().split("T")[0],
-      to: query.to.toISOString().split("T")[0],
+      from: query.from?.toISOString().split("T")[0],
+      to: query.to?.toISOString().split("T")[0],
     },
   });
 }
