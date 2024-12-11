@@ -8,7 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Field } from "@/components/ui/field";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { OrderStatus } from "@/domain/orders/enums/order-status.enum";
+import { useCancelOrder } from "@/domain/orders/hooks/cancel-order.hook";
 import { useDeleteOrder } from "@/domain/orders/hooks/delete-order.hook";
+import { useFinishOrder } from "@/domain/orders/hooks/finish-order.hook";
+import { useProcessOrder } from "@/domain/orders/hooks/process-order.hook";
 import { OrderModel } from "@/domain/orders/models/order.model";
 import { formatCurrency } from "@/helpers/formats/format-currency.helper";
 import { formatDate } from "@/helpers/formats/format-date.helper";
@@ -20,7 +24,10 @@ interface CardOrderDetailsProps {
 
 export function CardOrderDetails({ order }: CardOrderDetailsProps) {
   const navigate = useNavigate();
-  const { mutate } = useDeleteOrder();
+  const { mutate: deleteMutate } = useDeleteOrder();
+  const { mutate: cancelMutate } = useCancelOrder();
+  const { mutate: finishMutate } = useFinishOrder();
+  const { mutate: processMutate } = useProcessOrder();
 
   return (
     <Card className="mx-auto my-4 max-w-5xl">
@@ -46,7 +53,7 @@ export function CardOrderDetails({ order }: CardOrderDetailsProps) {
                 description="Tem certeza que deseja deletar esse pedido?"
                 trigger={<TrashButtonIcon />}
                 action={() => {
-                  mutate(order.id);
+                  deleteMutate(order.id);
                   navigate("/orders");
                 }}
               />
@@ -73,8 +80,27 @@ export function CardOrderDetails({ order }: CardOrderDetailsProps) {
               </div>
             </div>
             <div className="flex mt-8 gap-4 items-center">
-              <Button variant="default">Concluir</Button>
-              <Button variant="destructive">Cancelar</Button>
+              <Button
+                variant="default"
+                onClick={() => processMutate(order.id)}
+                disabled={order.status === OrderStatus.PROCESSING}
+              >
+                Processar
+              </Button>
+              <Button
+                variant="default"
+                onClick={() => finishMutate(order.id)}
+                disabled={order.status === OrderStatus.COMPLETED}
+              >
+                Concluir
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => cancelMutate(order.id)}
+                disabled={order.status === OrderStatus.CANCELED}
+              >
+                Cancelar
+              </Button>
             </div>
           </div>
         </CardContent>
