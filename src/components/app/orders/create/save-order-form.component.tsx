@@ -8,8 +8,9 @@ import { useCreateOrder } from "@/domain/orders/hooks/create-order.hook";
 import { useForm } from "@/hooks/use-form.hook";
 import { InputDatePickerForm } from "@/components/form/input-date-picker-form.component";
 import { OrderModel } from "@/domain/orders/models/order.model";
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
+import { useUpdateOrder } from "@/domain/orders/hooks/update-order.hook";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -62,6 +63,7 @@ interface SaveOrderFormProps {
 
 export function SaveOrderForm({ order }: SaveOrderFormProps) {
   const { mutate: createMutate, isSuccess: isSuccessCreate } = useCreateOrder();
+  const { mutate: updateMutate } = useUpdateOrder();
   const navigate = useNavigate();
 
   const form = useForm({
@@ -76,24 +78,30 @@ export function SaveOrderForm({ order }: SaveOrderFormProps) {
 
   function handleSubmit(values: z.infer<typeof createOrderSchema>) {
     if (!order) {
-      createMutate({
+      return createMutate({
         date: values.date,
         description: values.description,
         salePrice: values.salePrice,
         receivedPrice: values.receivedPrice,
         image: values.image[0],
       });
-      return;
     }
 
-    console.log("Update order", values);
+    updateMutate({
+      id: order.id,
+      date: values.date,
+      description: values.description,
+      salePrice: values.salePrice,
+      receivedPrice: values.receivedPrice,
+      image: values.image?.[0],
+    });
   }
 
   useEffect(() => {
     if (isSuccessCreate) {
       navigate("/orders");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessCreate]);
 
   return (
