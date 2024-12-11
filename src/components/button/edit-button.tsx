@@ -1,13 +1,18 @@
-import { ComponentPropsWithRef } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-interface EditButtonIconProps extends ComponentPropsWithRef<"button"> {}
+export interface EditButtonIconProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export function EditButtonIcon(props: EditButtonIconProps) {
+export const EditButtonIcon = forwardRef<
+  HTMLButtonElement,
+  EditButtonIconProps
+>((props: EditButtonIconProps, ref) => {
   return (
-    <Button variant="outline" size="icon" {...props}>
+    <Button variant="outline" size="icon" {...props} ref={ref}>
       <Edit />
     </Button>
   );
-}
+});
+EditButtonIcon.displayName = "EditButtonIcon";

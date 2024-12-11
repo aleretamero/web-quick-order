@@ -1,13 +1,18 @@
-import { ComponentPropsWithRef } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-interface PlusButtonIconProps extends ComponentPropsWithRef<"button"> {}
+export interface PlusButtonIconProps
+  extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export function PlusButtonIcon(props: PlusButtonIconProps) {
+export const PlusButtonIcon = forwardRef<
+  HTMLButtonElement,
+  PlusButtonIconProps
+>((props: PlusButtonIconProps, ref) => {
   return (
-    <Button variant="outline" size="icon" {...props}>
+    <Button variant="outline" size="icon" {...props} ref={ref}>
       <Plus />
     </Button>
   );
-}
+});
+PlusButtonIcon.displayName = "PlusButtonIcon";
