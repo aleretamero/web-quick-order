@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { LayoutDashboard, Table } from "lucide-react";
 import { AppSidebar, SidebarItem } from "@/components/layout/sidebar.component";
 import { useAuth } from "@/hooks/use-auth.hook";
@@ -6,6 +6,7 @@ import { Role } from "@/domain/user/enums/role.enum";
 
 export function DashboardLayout() {
   const { dataUser } = useAuth();
+  const location = useLocation();
 
   const sidebarData: SidebarItem[] = [
     ...(dataUser?.role === Role.ADMIN
@@ -13,7 +14,7 @@ export function DashboardLayout() {
           {
             title: "Início",
             icon: LayoutDashboard,
-            url: "/home",
+            url: `/home${location.search}`,
           },
         ]
       : []),
@@ -21,7 +22,7 @@ export function DashboardLayout() {
     {
       title: "Pedidos",
       icon: Table,
-      url: "/orders",
+      url: `/orders${location.search}`,
     },
   ];
 
