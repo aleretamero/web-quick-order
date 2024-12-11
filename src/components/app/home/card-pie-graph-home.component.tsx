@@ -50,13 +50,18 @@ export function CardPieGraphHome() {
     );
   }, [data]);
 
+
+  if (!data) {
+    return null; //TODO skeleton
+  }
+
   return (
     <div className="col-span-12 xl:col-span-5">
       <Card className="w-full h-full flex flex-col">
         <CardHeader className="items-center pb-0">
           <CardTitle>Pedidos por Status</CardTitle>
           <CardDescription>
-            {formatDate(data?.startDate)} a {formatDate(data?.endDate)}
+            {formatDate(data.startDate)} a {formatDate(data.endDate)}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
