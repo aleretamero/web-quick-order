@@ -4,12 +4,12 @@ import { useCallback, useEffect, useMemo } from "react";
 
 export function usePagination() {
   const limitKey = useMemo(() => "limit", []);
-  const limitDefaultValue = useMemo(() => 12, []);
+  const limitDefaultValue = useMemo(() => 10, []);
   const [limit, setLimit] = useQueryState(
     limitKey,
     parseAsInteger
       .withDefault(limitDefaultValue)
-      .withOptions({ clearOnDefault: true })
+      .withOptions({ clearOnDefault: false })
   );
   const resetLimit = useCallback(
     () => setLimit(limitDefaultValue),
@@ -20,7 +20,7 @@ export function usePagination() {
   const pageDefaultValue = useMemo(() => 1, []);
   const [page, setPage] = useQueryState(
     pageKey,
-    parseAsInteger.withDefault(1).withOptions({ clearOnDefault: true })
+    parseAsInteger.withDefault(1).withOptions({ clearOnDefault: false })
   );
   const resetPage = useCallback(
     () => setPage(pageDefaultValue),
