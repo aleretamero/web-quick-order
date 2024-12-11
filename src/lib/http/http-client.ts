@@ -79,7 +79,7 @@ export class HttpClient {
     const contentType =
       body instanceof FormData ? "multipart/form-data" : "application/json";
 
-    const promise = this.client.put<T>(path, body, {
+    const promise = this.client.patch<T>(path, body, {
       params: options?.params,
       headers: {
         "Content-Type": contentType,
