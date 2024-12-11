@@ -9,8 +9,8 @@ import { LoginForm } from "@/components/app/login/login-form.component";
 
 export function LoginPage() {
   return (
-    <div className="px-2 mx-auto max-w-md w-full">
-      <Card>
+    <div className="dark:bg-[#3f3f46] w-full h-full flex justify-center items-center">
+      <Card className="max-w-md w-full">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
           <CardDescription>
