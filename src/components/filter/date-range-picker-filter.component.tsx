@@ -21,8 +21,8 @@ export function DateRangePickerFilter({
 
   const [date, setDate] = React.useState<DateRange | undefined>(() => {
     const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-    const endDate = initialDate ?? new Date();
-    const startDate = finalDate ?? new Date(endDate.getTime() - ONE_WEEK);
+    const endDate = finalDate ?? new Date();
+    const startDate = initialDate ?? new Date(endDate.getTime() - ONE_WEEK);
 
     return {
       from: startDate,
