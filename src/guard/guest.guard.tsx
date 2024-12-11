@@ -7,7 +7,7 @@ interface GuestGuardProps {
 }
 
 export function GuestGuard({ children }: GuestGuardProps) {
-  const { isLogged } = useAuth();
+  const { isLogged, dataUser } = useAuth();
   const location = useLocation();
 
   if (isLogged === undefined) {
@@ -15,7 +15,15 @@ export function GuestGuard({ children }: GuestGuardProps) {
   }
 
   if (isLogged) {
-    return <Navigate to={`home${location.search}`} />;
+    return (
+      <Navigate
+        to={
+          dataUser?.role === "ADMIN"
+            ? `/home${location.search}`
+            : `/orders${location.search}`
+        }
+      />
+    );
   }
 
   return children;
