@@ -11,29 +11,12 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import * as React from "react";
-import { DateRange } from "react-day-picker";
 
 export function DateRangePickerFilter({
   className,
 }: React.HTMLAttributes<HTMLDivElement>) {
   const { initialDate, finalDate, setInitialDate, setFinalDate } =
     useQueryParamsDateRange();
-
-  const [date, setDate] = React.useState<DateRange | undefined>(() => {
-    const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
-    const endDate = finalDate ?? new Date();
-    const startDate = initialDate ?? new Date(endDate.getTime() - ONE_WEEK);
-
-    return {
-      from: startDate,
-      to: endDate,
-    };
-  });
-
-  React.useEffect(() => {
-    setInitialDate(date?.from ?? null);
-    setFinalDate(date?.to ?? null);
-  }, [date, setInitialDate, setFinalDate]);
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -44,18 +27,18 @@ export function DateRangePickerFilter({
             variant={"outline"}
             className={cn(
               "w-[260px] justify-start text-left font-normal text-foreground",
-              !date && "text-muted-foreground"
+              !initialDate && !finalDate && "text-muted-foreground"
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
+            {initialDate ? (
+              finalDate ? (
                 <>
-                  {format(date.from, "P", { locale: ptBR })} -{" "}
-                  {format(date.to, "P", { locale: ptBR })}
+                  {format(initialDate, "P", { locale: ptBR })} -{" "}
+                  {format(finalDate, "P", { locale: ptBR })}
                 </>
               ) : (
-                format(date.from, "P", { locale: ptBR })
+                format(initialDate, "P", { locale: ptBR })
               )
             ) : (
               <span>Selecione uma data</span>
@@ -66,9 +49,15 @@ export function DateRangePickerFilter({
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
+            defaultMonth={initialDate ?? undefined}
+            selected={{
+              from: initialDate ?? undefined,
+              to: finalDate ?? undefined,
+            }}
+            onSelect={(date) => {
+              setInitialDate(date?.from ?? null);
+              setFinalDate(date?.to ?? null);
+            }}
             numberOfMonths={2}
             locale={ptBR}
           />
