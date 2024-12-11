@@ -41,6 +41,7 @@ import {
 import { ThemeToggle } from "@/components/layout/theme-toggle.component";
 import { useAuth } from "@/hooks/use-auth.hook";
 import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
+import { GoBackButton } from "@/components/button/go-back-button";
 
 const company = {
   name: "Acme Inc",
@@ -211,12 +212,14 @@ export function AppSidebar({ data, children }: SidebarProps) {
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center justify-between transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-2 sm:px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
+            <SidebarTrigger />
+            <Separator orientation="vertical" className="mx-2 h-4" />
+            <GoBackButton />
           </div>
 
           <div className="flex items-center gap-2 px-2 sm:px-4">
             <DateRangePickerFilter />
+            <Separator orientation="vertical" className="mx-2 h-4" />
             <ThemeToggle />
           </div>
         </header>
