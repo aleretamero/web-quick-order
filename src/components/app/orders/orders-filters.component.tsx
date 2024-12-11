@@ -1,5 +1,4 @@
 import { BoxMultipleFilter } from "@/components/filter/box-multiple-filter.component";
-import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
 import { OrderStatus } from "@/domain/orders/enums/order-status.enum";
 import { useQueryParamsOrderStatus } from "@/domain/orders/hooks/use-query-params-order-status";
 
@@ -20,7 +19,6 @@ export function OrdersFilters() {
         align="start"
         size="lg"
       />
-      <DateRangePickerFilter />
     </div>
   );
 }
