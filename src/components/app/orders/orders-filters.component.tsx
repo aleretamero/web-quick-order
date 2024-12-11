@@ -6,7 +6,7 @@ export function OrdersFilters() {
   const { key } = useQueryParamsOrderStatus();
 
   return (
-    <div className="flex justify-between items-center gap-4">
+    <div className="flex items-center gap-4">
       <BoxMultipleFilter
         title="Filtros"
         filterKey={key}
