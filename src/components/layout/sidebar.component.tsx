@@ -40,12 +40,11 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/theme-toggle.component";
 import { useAuth } from "@/hooks/use-auth.hook";
-import { DateRangePickerFilter } from '@/components/filter/date-range-picker-filter.component';
+import { DateRangePickerFilter } from "@/components/filter/date-range-picker-filter.component";
 
 const company = {
   name: "Acme Inc",
   logo: GalleryVerticalEnd,
-  plan: "Enterprise",
 };
 
 export interface SidebarItem {
@@ -64,13 +63,13 @@ interface SidebarProps {
 export function AppSidebar({ data, children }: SidebarProps) {
   const [mounted, setMounted] = React.useState(false);
   const { pathname } = useLocation();
-  const { logout } = useAuth();
+  const { logout, dataUser } = useAuth();
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
+  if (!mounted || !dataUser) {
     return null; // or a loading skeleton
   }
 
@@ -78,13 +77,12 @@ export function AppSidebar({ data, children }: SidebarProps) {
     <SidebarProvider>
       <Sidebar collapsible="icon">
         <SidebarHeader>
-          <div className="flex gap-2 py-2 text-sidebar-accent-foreground">
+          <div className="flex gap-2 py-2 text-sidebar-accent-foreground justify-center items-center">
             <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
               <company.logo className="size-4" />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">{company.name}</span>
-              <span className="truncate text-xs">{company.plan}</span>
             </div>
           </div>
         </SidebarHeader>
@@ -165,8 +163,8 @@ export function AppSidebar({ data, children }: SidebarProps) {
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">User Name</span>
-                      <span className="truncate text-xs">User Email</span>
+                      {/* <span className="truncate font-semibold">User Name</span> */}
+                      <span className="truncate text-xs">{dataUser.email}</span>
                     </div>
                     <ChevronsUpDown className="ml-auto size-4" />
                   </SidebarMenuButton>
@@ -189,10 +187,12 @@ export function AppSidebar({ data, children }: SidebarProps) {
                         </AvatarFallback>
                       </Avatar>
                       <div className="grid flex-1 text-left text-sm leading-tight">
-                        <span className="truncate font-semibold">
+                        {/* <span className="truncate font-semibold">
                           User Name
+                        </span> */}
+                        <span className="truncate text-xs">
+                          {dataUser.email}
                         </span>
-                        <span className="truncate text-xs">User Email</span>
                       </div>
                     </div>
                   </DropdownMenuLabel>
