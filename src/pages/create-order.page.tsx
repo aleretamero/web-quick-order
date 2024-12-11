@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageContainer } from "@/components/layout/page-container.component";
-import { SaveOrderForm } from "@/components/app/orders/create/save-order-form.component";
+import { SaveOrderForm } from "@/components/app/orders/save-order-form.component";
 
 export function CreateOrderPage() {
   return (

@@ -1,4 +1,4 @@
-import { SaveOrderForm } from "@/components/app/orders/create/save-order-form.component";
+import { SaveOrderForm } from "@/components/app/orders/save-order-form.component";
 import { EditButtonIcon } from "@/components/button/edit-button";
 import { PlusButtonIcon } from "@/components/button/plus-button";
 import { Modal } from "@/components/feedback/modal.component";
