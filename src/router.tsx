@@ -4,7 +4,6 @@ import { AuthGuard } from "@/guard/auth.guard";
 import { LoginPage } from "@/pages/login.page";
 import { HomePage } from "@/pages/home.page";
 import { OrdersPage } from "@/pages/orders.page";
-import { CreateOrderPage } from "@/pages/create-order.page";
 import { OrderDetailsPage } from "@/pages/order-details.page";
 import { DashboardLayout } from "@/layouts/dashboard.layout";
 import { AuthLayout } from "@/layouts/auth.layout";
@@ -41,10 +40,6 @@ export const router = createBrowserRouter([
           {
             path: "orders",
             element: <OrdersPage />,
-          },
-          {
-            path: "orders/create",
-            element: <CreateOrderPage />,
           },
           {
             path: "orders/:id",
