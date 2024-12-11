@@ -11,6 +11,6 @@ export interface PaginationResponse<T = any> {
 }
 
 export interface DateRangeQuery {
-  from: Date;
-  to: Date;
+  from?: Date;
+  to?: Date;
 }
